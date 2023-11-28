@@ -1,3 +1,4 @@
+#pip install matplotlib pytesseract opencv-python
 import matplotlib.pyplot as plt
 import pytesseract
 import cv2
@@ -30,8 +31,8 @@ def enlarge_img(image, scale_percent):
     return resized_image
 
 def main():
-    carplate_img_rgb = open_img(img_path = 'C:\\Users\\Nastya\\Desktop\\cardetection\\cars\\4.jpg')
-    carplate_haar_cascade = cv2.CascadeClassifier('C:\\Users\\Nastya\\Desktop\\cardetection\\haar_cascades\\haarcascade_russian_plate_number.xml')
+    carplate_img_rgb = open_img(img_path = 'C:\\Users\\Nastya\\Desktop\\carDetectionNumber\\cars\\4.jpg')
+    carplate_haar_cascade = cv2.CascadeClassifier('C:\\Users\\Nastya\\Desktop\\carDetectionNumber\\haar_cascades\\haarcascade_russian_plate_number.xml')
     carplate_extract_img = carplate_extract(carplate_img_rgb, carplate_haar_cascade)
     carplate_extract_img = enlarge_img(carplate_extract_img, 150)
     plt.imshow(carplate_extract_img)
