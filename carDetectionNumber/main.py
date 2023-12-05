@@ -2,6 +2,7 @@
 import matplotlib.pyplot as plt
 import pytesseract as pt
 import cv2
+import configparser
 
 def open_img(img_path):
     carplate_img = cv2.imread(img_path)
@@ -32,8 +33,16 @@ def enlarge_img(image, scale_percent):
     return resized_image
 
 def main():
-    carplate_img_rgb = open_img(img_path = 'C:\\Users\\Nastya\\Desktop\\carDetectionNumber\\cars\\3.jpg')
-    carplate_haar_cascade = cv2.CascadeClassifier('C:\\Users\\Nastya\\Desktop\\carDetectionNumber\\haar_cascades\\haarcascade_russian_plate_number.xml')
+    config = configparser.ConfigParser()
+    config.read('path_to_config_file.cfg')
+
+    carplate_img_rgb_path = config.get('Paths', 'carplate_img_rgb')
+    carplate_haar_cascade_path = config.get('Paths', 'carplate_haar_cascade')
+
+    carplate_img_rgb = open_img(img_path=carplate_img_rgb_path)
+    carplate_haar_cascade = cv2.CascadeClassifier(carplate_haar_cascade_path)
+    #carplate_img_rgb = open_img(img_path = 'C:\\Users\\Nastya\\Desktop\\carDetectionNumber\\cars\\3.jpg')
+    #carplate_haar_cascade = cv2.CascadeClassifier('C:\\Users\\Nastya\\Desktop\\carDetectionNumber\\haar_cascades\\haarcascade_russian_plate_number.xml')
     carplate_extract_img = carplate_extract(carplate_img_rgb, carplate_haar_cascade)
     carplate_extract_img = enlarge_img(carplate_extract_img, 150)
     plt.imshow(carplate_extract_img)
